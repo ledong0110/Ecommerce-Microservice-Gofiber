@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  auth_service:
+    container_name: auth_service
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    ports:
+      - 8001:8000
+    # volumes:
+    #   - ./services/web_blog/:/go/src/app
+    environment:
+      - PORT=8000
+      - DB_USER=test
+      - DB_PWD=test@2023
+      - DB_HOST=mysql
+      - DB_NAME=Test
+      - REFRESH_TOKEN_SECRET=biggroup1_sad
+      - ACCESS_TOKEN_SECRET=sad
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    container_name: mysql
+    build:
+      context: ./services/database-service
+      dockerfile: Dockerfile
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=ecommerce_sad
