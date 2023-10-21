@@ -2,6 +2,10 @@ version: '3.8'
 
 services:
   auth_service:
+    depends_on:
+      - db
+    links:
+      - db
     container_name: auth_service
     build:
       context: ./services/auth-service
@@ -18,10 +22,7 @@ services:
       - DB_NAME=Test
       - REFRESH_TOKEN_SECRET=biggroup1_sad
       - ACCESS_TOKEN_SECRET=sad
-    depends_on:
-      - db
-    links:
-      - db
+    
 
   db:
     container_name: mysql

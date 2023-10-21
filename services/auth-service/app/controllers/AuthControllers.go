@@ -82,7 +82,7 @@ func InitializeAuthController() AuthController {
 		if err := c.BodyParser(&payload); err != nil {
 			return c.SendStatus(403)
 		}
-		log.Println(payload)
+		// log.Println(payload)
 		db := database.DB
 		// log.Println(string(acc))
 		// opts := options.FindOne().SetProjection(bson.M{
