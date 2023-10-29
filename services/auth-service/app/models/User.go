@@ -4,6 +4,19 @@ import (
 	guuid "github.com/google/uuid"
 )
 
+type LoginForm struct {
+	Username  string `json:"username"`
+	Password string  `json:"password"`
+}
+
+type RegisterForm struct {
+	Fullname  string     `json:"fullname"`
+	Username  string     `json:"username"`
+	Email     string     `json:"email"`
+	Role	  string 	 `json:"role"`
+	Picture	  string 	 `json:"picture"`
+	Password  string     `json:"password"`
+}
 type User struct {
 	ID        guuid.UUID `gorm:"primaryKey" json:"-"`
 	Fullname  string     `json:"fullname"`
