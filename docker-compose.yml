@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - auth_service
+    volumes:
+      - ./services/nginx/logs:/var/log/nginx
+
   auth_service:
     depends_on:
       - db
