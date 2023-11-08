@@ -1,0 +1,238 @@
+basePath: /
+definitions:
+  models.LoginForm:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.RegisterForm:
+    properties:
+      email:
+        type: string
+      fullname:
+        type: string
+      password:
+        type: string
+      picture:
+        type: string
+      role:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UpdateForm:
+    properties:
+      email:
+        description: Username  string     `json:"username"`
+        type: string
+      fullname:
+        type: string
+      picture:
+        type: string
+      role:
+        type: string
+    type: object
+host: 127.0.0.1:8000
+info:
+  contact:
+    email: fiber@swagger.io
+    name: API Support
+  description: This is a sample swagger for Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Ecommerce Authentication Service API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login to the system
+      parameters:
+      - description: LoginForm
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Login to the system
+      tags:
+      - authentication
+  /auth/logout:
+    get:
+      consumes:
+      - application/json
+      description: Logout to the systems
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Logout to the system
+      tags:
+      - authentication
+  /auth/refresh:
+    get:
+      consumes:
+      - application/json
+      description: Refresh new access token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Refresh new access token
+      tags:
+      - authentication
+  /user/:
+    get:
+      consumes:
+      - application/json
+      description: Get All Users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get All Users
+      tags:
+      - user
+  /user/{username}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user
+      parameters:
+      - description: username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Delete a user
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: Get Infor User By Username
+      parameters:
+      - description: username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get Infor User By Username
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: Update User
+      parameters:
+      - description: username
+        in: path
+        name: username
+        required: true
+        type: string
+      - description: UpdateUserForm
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Update User
+      tags:
+      - user
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      description: Create new user
+      parameters:
+      - description: UserModel
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create new user
+      tags:
+      - user
+swagger: "2.0"

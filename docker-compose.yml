@@ -31,7 +31,7 @@ services:
       - DB_USER=test
       - DB_PWD=test@2023
       - DB_HOST=mysql
-      - DB_NAME=Test
+      - DB_NAME=ecommerce_microservice
       - REFRESH_TOKEN_SECRET=biggroup1_sad
       - ACCESS_TOKEN_SECRET=sad
     
