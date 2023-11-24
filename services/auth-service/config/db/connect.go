@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 	"os"
-	"user-service/app/models"
+	"auth_service/app/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

@@ -13,6 +13,9 @@ services:
     volumes:
       - ./services/nginx/logs:/var/log/nginx
       - ./services/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - api-network
+    
 
   rabbitmq:
     image: rabbitmq:3.6-management-alpine
@@ -32,29 +35,39 @@ services:
       context: ./services/auth-service
       dockerfile: Dockerfile
     ports:
-      - 8000:8000
+      - 8000:80
   
     environment:
-      - PORT=8000
+      - PORT=80
       - DB_USER=test
       - DB_PWD=test@2023
       - DB_HOST=mysql
       - DB_NAME=ecommerce_microservice
       - REFRESH_TOKEN_SECRET=biggroup1_sad
       - ACCESS_TOKEN_SECRET=sad
+      - OTP_CREDENTIAL=sadotpgroup1
+      - AMQP_SERVER_URL=amqp://guest:guest@rabbitmq/
     networks:
       - api-network
+      - message-queue-network
     depends_on:
+      - rabbitmq
       - db
     
 
-  mail_service:
-        image: marcopas/docker-mailslurper
-        restart: always
-        ports:
-            - "2500:2500"
-            - "9000:8080"
-            - "8085:8085"
+  email_service:
+    container_name: email_service
+    build:
+      context: ./services/email-service
+      dockerfile: Dockerfile
+    environment:
+      - AMQP_SERVER_URL=amqp://guest:guest@rabbitmq/
+      - MAIL_USER=ducdong0110@gmail.com
+      - MAIL_TOKEN=ndqksukidclyonim
+    networks:
+      - message-queue-network
+    depends_on:
+      - rabbitmq
 
   db:
     container_name: mysql

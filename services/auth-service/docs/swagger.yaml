@@ -1,5 +1,14 @@
 basePath: /
 definitions:
+  models.ChangePasswordForm:
+    properties:
+      new_pwd:
+        type: string
+      old_pwd:
+        type: string
+      username:
+        type: string
+    type: object
   models.EmailForm:
     properties:
       email:
@@ -10,6 +19,20 @@ definitions:
       password:
         type: string
       username:
+        type: string
+    type: object
+  models.NewPasswordForm:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.OTPForm:
+    properties:
+      email:
+        type: string
+      otp:
         type: string
     type: object
   models.RegisterForm:
@@ -156,4 +179,30 @@ paths:
       summary: Create new user
       tags:
       - users
+  /auth/submitOTP:
+    post:
+      consumes:
+      - application/json
+      description: Submit new password to change password
+      parameters:
+      - description: Password
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.NewPasswordForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Reset password
+      tags:
+      - authentication
 swagger: "2.0"

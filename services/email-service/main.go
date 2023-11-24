@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"github.com/joho/godotenv"
+	"os"
 	handlers "email_service/handlers"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -15,7 +16,7 @@ func failOnError(err error, msg string) {
 
 func main() {
 	godotenv.Load()
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp.Dial(os.Getenv("AMQP_SERVER_URL"))
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
 
