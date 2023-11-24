@@ -9,8 +9,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
+	
     // jwtware "github.com/gofiber/contrib/jwt"
 	db "auth_service/config/db"
+	setup_amqp "auth_service/config/amqp"
 	routes "auth_service/resources/routes"
 	_ "auth_service/resources/utility"
     _ "auth_service/docs"
@@ -31,7 +33,13 @@ func main() {
     godotenv.Load()
     // Connect database
     db.ConnectDB()
-    // // Initialize server
+	// Connect RabitMQ
+	rabbitmqConn := setup_amqp.ConnectAmqp(os.Getenv("AMQP_SERVER_URL"))
+    defer rabbitmqConn.Close()
+
+	
+	
+	// // Initialize server
     app := fiber.New(fiber.Config{})
     // app.Use(jwtware.New(jwtware.Config{
 	// 	SigningKey: jwtware.SigningKey{Key: []byte(os.Getenv("ACCESS_TOKEN_SECRET"))},
@@ -43,7 +51,7 @@ func main() {
     }))
     // app.Static("/", "./public/build")
     
-    app.Get("/swagger/*", swagger.HandlerDefault)
+    app.Get("auth/swagger/*", swagger.HandlerDefault)
 
 	// app.Get("/swagger/*", swagger.New(swagger.Config{ // custom
 	// 	URL: "http://example.com/doc.json",

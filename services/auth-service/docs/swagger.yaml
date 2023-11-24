@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  models.EmailForm:
+    properties:
+      email:
+        type: string
+    type: object
   models.LoginForm:
     properties:
       password:
@@ -32,9 +37,35 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Fiber Example API
+  title: Ecommerce Authentication Service API
   version: "1.0"
 paths:
+  /auth/forgot:
+    post:
+      consumes:
+      - application/json
+      description: User lost their password, they need to change another password
+      parameters:
+      - description: Email
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.EmailForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Forgot password
+      tags:
+      - authentication
   /auth/login:
     post:
       consumes:
