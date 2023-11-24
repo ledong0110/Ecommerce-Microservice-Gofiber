@@ -1,3 +1,0 @@
-replace types.Field[string] string
-replace types.DoubleField[string,string] []string
-replace types.TrippleField[string,string] [][]string
