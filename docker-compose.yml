@@ -54,6 +54,30 @@ services:
       - rabbitmq
       - db
     
+  product_service:
+    container_name: product_service
+    build:
+      context: ./services/product-service
+      dockerfile: Dockerfile
+    # ports:
+    #   - 8001:80
+  
+    environment:
+      - PORT=80
+      - DB_USER=test
+      - DB_PWD=test@2023
+      - DB_HOST=mysql
+      - DB_NAME=ecommerce_microservice
+      - REFRESH_TOKEN_SECRET=biggroup1_sad
+      - ACCESS_TOKEN_SECRET=sad
+      - OTP_CREDENTIAL=sadotpgroup1
+      - AMQP_SERVER_URL=amqp://guest:guest@rabbitmq/
+    networks:
+      - api-network
+      - message-queue-network
+    depends_on:
+      - rabbitmq
+      - db
 
   email_service:
     container_name: email_service
@@ -143,4 +167,8 @@ volumes:
 networks:
   message-queue-network:
   share-network:
+    driver: bridge
+    external: true
   api-network:
+    driver: bridge
+    external: true
