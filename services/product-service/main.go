@@ -23,7 +23,7 @@ func main() {
 	// Initialize server
 	app := fiber.New(fiber.Config{})
 	// Add Swagger
-	app.Get("/swagger/*", swagger.HandlerDefault)
+	app.Get("/prod/swagger/*", swagger.HandlerDefault)
 	// Add route
 	routes.Route(app)
 
