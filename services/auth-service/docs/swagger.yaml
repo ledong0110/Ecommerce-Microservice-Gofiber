@@ -1,10 +1,38 @@
 basePath: /
 definitions:
+  models.ChangePasswordForm:
+    properties:
+      new_pwd:
+        type: string
+      old_pwd:
+        type: string
+      username:
+        type: string
+    type: object
+  models.EmailForm:
+    properties:
+      email:
+        type: string
+    type: object
   models.LoginForm:
     properties:
       password:
         type: string
       username:
+        type: string
+    type: object
+  models.NewPasswordForm:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.OTPForm:
+    properties:
+      email:
+        type: string
+      otp:
         type: string
     type: object
   models.RegisterForm:
@@ -32,9 +60,35 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Fiber Example API
+  title: Ecommerce Authentication Service API
   version: "1.0"
 paths:
+  /auth/forgot:
+    post:
+      consumes:
+      - application/json
+      description: User lost their password, they need to change another password
+      parameters:
+      - description: Email
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.EmailForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Forgot password
+      tags:
+      - authentication
   /auth/login:
     post:
       consumes:
@@ -125,4 +179,30 @@ paths:
       summary: Create new user
       tags:
       - users
+  /auth/submitOTP:
+    post:
+      consumes:
+      - application/json
+      description: Submit new password to change password
+      parameters:
+      - description: Password
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.NewPasswordForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Reset password
+      tags:
+      - authentication
 swagger: "2.0"

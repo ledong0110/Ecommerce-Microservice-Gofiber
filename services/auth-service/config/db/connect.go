@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 	"os"
-	"user-service/app/models"
+	"auth_service/app/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -16,7 +16,7 @@ func ConnectDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = DB.AutoMigrate(&models.User{})
+	err = DB.AutoMigrate(&models.User{}, &models.OTP{})
 	if err != nil {
 		log.Fatal(err)
 	}

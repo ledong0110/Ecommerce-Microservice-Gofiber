@@ -1,5 +1,0 @@
-package invalid
-
-func Foo() {
-
-}

@@ -23,6 +23,46 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/forgot": {
+            "post": {
+                "description": "User lost their password, they need to change another password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Forgot password",
+                "parameters": [
+                    {
+                        "description": "Email",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.EmailForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/login": {
             "post": {
                 "description": "Login to the system",
@@ -160,9 +200,71 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/auth/submitOTP": {
+            "post": {
+                "description": "Submit new password to change password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "Reset password",
+                "parameters": [
+                    {
+                        "description": "Password",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NewPasswordForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "models.ChangePasswordForm": {
+            "type": "object",
+            "properties": {
+                "new_pwd": {
+                    "type": "string"
+                },
+                "old_pwd": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.EmailForm": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
         "models.LoginForm": {
             "type": "object",
             "properties": {
@@ -170,6 +272,28 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.NewPasswordForm": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.OTPForm": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "otp": {
                     "type": "string"
                 }
             }
@@ -206,7 +330,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "127.0.0.1:8000",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Fiber Example API",
+	Title:            "Ecommerce Authentication Service API",
 	Description:      "This is a sample swagger for Fiber",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
