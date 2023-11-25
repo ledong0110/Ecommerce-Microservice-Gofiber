@@ -37,15 +37,13 @@ func (ctrl ProdController) Add(c *fiber.Ctx) error {
 		return c.SendStatus(403)
 	}
 
-	ownerId := "undefined" // get the currently logged in user id here (?)
-
 	newProduct := models.Product{
 		ID:      guuid.New(),
 		Name:    request.Name,
 		Price:   request.Price,
 		Picture: request.Picture,
 		Detail:  request.Detail,
-		OwnerId: ownerId,
+		OwnerId: request.UserId,
 	}
 
 	// add product id to user table for easy searching (?)
